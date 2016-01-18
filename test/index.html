@@ -4,8 +4,10 @@
   <meta charset="UTF-8">
   <title>range-datetimepicker example</title>
   
+  <!-- build:css styles/style.css -->
   <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.css">
   <link rel="stylesheet" href="../bower_components/bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css">
+  <!-- endbuild -->
   
 </head>
 <body>
@@ -13,15 +15,15 @@
   
   <div id="datetimepicker"></div>
   
-  
+  <!-- build:js scripts/app.js -->
   <script src="../bower_components/jquery/dist/jquery.js"></script>
   <script src="../bower_components/moment/moment.js"></script>
   <script src="../bower_components/moment/locale/zh-cn.js"></script>
   <script src="../bower_components/moment-timezone/builds/moment-timezone-with-data-2010-2020.js"></script>
   <script src="../bower_components/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
   
-  
   <script src="../src/range-datetimepicker.js"></script>
+  <!-- endbuild -->
   
   <script>
     $("#datetimepicker").rangePicker({
