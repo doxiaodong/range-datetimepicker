@@ -1,0 +1,12 @@
+{
+  "name": "doxiaodong-range-datetimepicker",
+  "version": "0.1.0",
+  "main": [
+    "build/css/range-datetimepicker.min.css",
+    "build/js/range-datetimepicker.min.js"
+  ],
+  "dependencies": {
+    "bootstrap-datetimepicker": "eonasdan-bootstrap-datetimepicker#latest",
+    "bootstrap": "~3.3.6"
+  }
+}

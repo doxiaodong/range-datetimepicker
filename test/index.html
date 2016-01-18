@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>range-datetimepicker example</title>
+  
+  <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.css">
+  <link rel="stylesheet" href="../bower_components/bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css">
+  
+</head>
+<body>
+  
+  
+  <div id="datetimepicker"></div>
+  
+  
+  <script src="../bower_components/jquery/dist/jquery.js"></script>
+  <script src="../bower_components/moment/moment.js"></script>
+  <script src="../bower_components/moment/locale/zh-cn.js"></script>
+  <script src="../bower_components/moment-timezone/builds/moment-timezone-with-data-2010-2020.js"></script>
+  <script src="../bower_components/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+  
+  
+  <script src="../src/range-datetimepicker.js"></script>
+  
+  <script>
+    $("#datetimepicker").rangePicker({
+      format: 'MMMM Do YYYY, h:mm:ss a'
+    }, {
+      update: function(date) {
+        console.log('update', date);
+      }
+    });
+  </script>
+</body>
+</html>
