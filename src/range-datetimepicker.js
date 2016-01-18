@@ -146,6 +146,8 @@
     
     this._time();
     
+    this._emit();
+    
   };
   
   rangeDateTimePicker.prototype._time = function() {
