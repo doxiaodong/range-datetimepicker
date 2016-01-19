@@ -13,26 +13,67 @@
 <body>
   
   
-  <div id="datetimepicker"></div>
+  <div class="row">
+    <div class="col-md-6">
+      <p class="res1"></p>
+      customer: <span id="datetimepicker"></span>
+    </div>
+    <div class="col-md-6" id="angularTest" ng-controller="angularCtrl">
+      <p class="res2">{{ selectedDate }}</p>
+      angular: <range-datetimepicker ng-model="selectedDate" options="options"></range-datetimepicker>
+      
+    </div>
+  </div>
+  
+  
   
   <!-- build:js scripts/app.js -->
   <script src="../bower_components/jquery/dist/jquery.js"></script>
+  <script src="../bower_components/angular/angular.js"></script>
   <script src="../bower_components/moment/moment.js"></script>
   <script src="../bower_components/moment/locale/zh-cn.js"></script>
   <script src="../bower_components/moment-timezone/builds/moment-timezone-with-data-2010-2020.js"></script>
   <script src="../bower_components/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
   
   <script src="../src/range-datetimepicker.js"></script>
+  <script src="../src/range-datetimepicker.directive.js"></script>
   <!-- endbuild -->
   
   <script>
     $("#datetimepicker").rangePicker({
-      format: 'MMMM Do YYYY, h:mm:ss a'
+      format: 'YYYY/MM'
     }, {
+      defaultDate: {
+        start: moment().subtract(moment.duration(2, 'month')),
+        end: moment()
+      },
       update: function(date) {
-        console.log('update', date);
+        console.log('update customer');
+        $('.res1').html(JSON.stringify(date));
       }
     });
+  </script>
+  
+  <script>
+    var testModule = angular.module('angularTest', ['range.datetimepicker']);
+    testModule.controller('angularCtrl', ['$scope', function($scope) {
+      $scope.selectedDate = {
+        start: moment().subtract(moment.duration(2, 'd')),
+        end: moment()
+      };
+      $scope.options = {
+        format: 'MMMM Do YYYY, HH:mm:ss'
+      };
+      
+      $scope.$watchCollection('selectedDate', function() {
+        console.log('update angular');
+      });
+      
+    }]);
+    
+    var test = document.getElementById('angularTest');
+    angular.bootstrap(angular.element(test), ['angularTest']);
+    
   </script>
 </body>
 </html>

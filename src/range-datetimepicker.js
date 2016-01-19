@@ -4,7 +4,7 @@
    *
    * param: options <bootstrap-datetimepiker params> do not set defaultDate
    *
-   * param: exOptions <range-datetimepicker extra params> {template, defaultDate{start: moment(), end: moment()}}
+   * param: exOptions <range-datetimepicker extra params> {template: string, defaultDate: {start: moment(), end: moment()}}
    */
   
   var rangeDateTimePicker = function(element, options, exOptions) {
@@ -14,6 +14,7 @@
     this.options.format = this.options.format || 'YYYY/MM/DD';
     this.options.locale = this.options.locale || 'zh-cn';
     this.options.keepOpen = true; // 始终保持日历打开
+    this.options.inline = true; // 始终inline
     this.exOptions = exOptions || {};
     this.exOptions.defaultDate = this.exOptions.defaultDate || {start: moment().subtract(moment.duration(7, 'd')), end: moment()};
     
@@ -51,7 +52,7 @@
     var element = this.element;
     var exOptions = this.exOptions;
     
-    // 驼峰式命名的类不可去掉
+    // 驼峰式命名的类不可去掉, .hide不可去掉
     var templateString = '' +
       '<div class="showRange btn btn-outline date-range-label">' +
         '<span class="rangeData1"></span> - <span class="rangeData2"></span>' +
@@ -117,14 +118,16 @@
     dom.showRange.on('click', function() {
       if (dom.pickerBody.hasClass('hide')) {
         dom.pickerBody.removeClass('hide');
-        element.find('.datetimepickerSelect').each(function(index, _element) {
-          $(_element).data("DateTimePicker").show();
-        });
+        // 不知道这里什么鬼，始终使用options.inline === true 不用 $(_element).data("DateTimePicker").show();
+        // element.find('.datetimepickerSelect').each(function(index, _element) {
+        //   $(_element).data("DateTimePicker").show();
+        // });
       } else {
         dom.pickerBody.addClass('hide');
-        element.find('.datetimepickerSelect').each(function(index, _element) {
-          $(_element).data("DateTimePicker").hide();
-        });
+        // 不知道这里什么鬼，始终使用options.inline === true 不用 $(_element).data("DateTimePicker").hide();
+        // element.find('.datetimepickerSelect').each(function(index, _element) {
+        //   $(_element).data("DateTimePicker").hide();
+        // });
       }
     });
     
@@ -134,7 +137,7 @@
       dom.showRange.trigger('click');
     });
     
-    dom.select1.on("dp.change", function(e) { 
+    dom.select1.on("dp.change", function(e) {
       dom.select2.data("DateTimePicker").minDate(e.date);
       dom.showDate.find('input.rangeDate1').val(e.date.format(options.format));
     });
@@ -156,13 +159,25 @@
     dom.showDate.find('input.rangeDate1').on('blur', function() {
       if (moment(this.value, options.format).isValid()) {
         dom.select1.data("DateTimePicker").date(checkTime(moment(this.value, options.format), dom.select1));
+        // TODO, 当值没有变化时手动触发 "dp.change"
+      }
+    });
+    
+    dom.showDate.find('input.rangeDate2').on('blur', function() {
+      if (moment(this.value, options.format).isValid()) {
+        dom.select2.data("DateTimePicker").date(checkTime(moment(this.value, options.format), dom.select2));
+        // TODO, 当值没有变化时手动触发 "dp.change"
       }
     });
     
     function checkTime(date, select) {
-      if (date.valueOf() > select.data("DateTimePicker").maxDate().valueOf()) {
+      var _max = select.data("DateTimePicker").maxDate();
+      var _min = select.data("DateTimePicker").minDate();
+      if (_max && date.valueOf() > _max.valueOf()) {
+        select.data("DateTimePicker").maxDate(_max.add(moment.duration(20))); // 强制添加20ms以触发 "db.change"
         return select.data("DateTimePicker").maxDate();
-      } else if (date.valueOf() < select.data("DateTimePicker").minDate().valueOf()) {
+      } else if (_min && date.valueOf() < _min.valueOf()) {
+        select.data("DateTimePicker").minDate(_min.add(moment.duration(20))); // 强制添加20ms以触发 "db.change"
         return select.data("DateTimePicker").minDate();
       } else {
         return date;
