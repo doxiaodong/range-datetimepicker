@@ -159,14 +159,12 @@
     dom.showDate.find('input.rangeDate1').on('blur', function() {
       if (moment(this.value, options.format).isValid()) {
         dom.select1.data("DateTimePicker").date(checkTime(moment(this.value, options.format), dom.select1));
-        // TODO, 当值没有变化时手动触发 "dp.change"
       }
     });
     
     dom.showDate.find('input.rangeDate2').on('blur', function() {
       if (moment(this.value, options.format).isValid()) {
         dom.select2.data("DateTimePicker").date(checkTime(moment(this.value, options.format), dom.select2));
-        // TODO, 当值没有变化时手动触发 "dp.change"
       }
     });
     
