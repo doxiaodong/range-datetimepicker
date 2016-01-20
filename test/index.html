@@ -7,6 +7,8 @@
   <!-- build:css styles/style.css -->
   <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.css">
   <link rel="stylesheet" href="../bower_components/bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css">
+  
+  <link rel="stylesheet" href="../src/range-datetimepicker.css">
   <!-- endbuild -->
   
 </head>
@@ -33,7 +35,7 @@
   <script src="../bower_components/moment/moment.js"></script>
   <script src="../bower_components/moment/locale/zh-cn.js"></script>
   <script src="../bower_components/moment-timezone/builds/moment-timezone-with-data-2010-2020.js"></script>
-  <script src="../bower_components/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+  <script src="../bower_components/bootstrap-datetimepicker/src/js/bootstrap-datetimepicker.js"></script>
   
   <script src="../src/range-datetimepicker.js"></script>
   <script src="../src/range-datetimepicker.directive.js"></script>
@@ -52,6 +54,13 @@
         $('.res1').html(JSON.stringify(date));
       }
     });
+    $("#datetimepicker").on('select1Value.invalid', function(e, data) {
+      console.warn('html, err: %s, right: %s', data.err, data.right);
+    })
+    .on('select2Value.invalid', function(e, data) {
+      console.warn('html, err: %s, right: %s', data.err, data.right);
+    })
+    ;
   </script>
   
   <script>
@@ -67,6 +76,13 @@
       
       $scope.$watchCollection('selectedDate', function() {
         console.log('update angular');
+      });
+      
+      $scope.$on('select1Value.invalid', function(e, data) {
+        console.warn('html, err: %s, right: %s', data.err, data.right);
+      });
+      $scope.$on('select2Value.invalid', function(e, data) {
+        console.warn('html, err: %s, right: %s', data.err, data.right);
       });
       
     }]);

@@ -27,6 +27,12 @@
             }
           };
           $(element).rangePicker(scope.options, scope.exOptions);
+          $(element).on('select1Value.invalid', function(e, data) {
+            scope.$emit('select1Value.invalid', data);
+          })
+          .on('select2Value.invalid', function(e, data) {
+            scope.$emit('select2Value.invalid', data);
+          });
         };
         
         ngModel.$render = function() {

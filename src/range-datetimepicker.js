@@ -52,6 +52,8 @@
     var element = this.element;
     var exOptions = this.exOptions;
     
+    element.addClass('range-datetimepicker-container');
+    
     // 驼峰式命名的类不可去掉, .hide不可去掉
     var templateString = '' +
       '<div class="showRange btn btn-outline date-range-label">' +
@@ -62,11 +64,11 @@
       '<div class="datepicker-calendar-menu pickerBody hide">' +
         '<div class="datepicker-calendar">' +
 
-          '<div class="datepicker-head showDate">' +
+          '<div class="datepicker-head form-inline showDate">' +
             '<span>时间范围:</span>' +
-            '<input type="text" class="date-input rangeDate1">' +
+            '<label><input type="text" class="form-control rangeDate1"></label>' +
             '<span class="date-separator">至</span>' +
-            '<input type="text" class="date-input rangeDate2">' +
+            '<label><input type="text" class="form-control rangeDate2"></label>' +
             '<button class="updateTimeButton btn btn-sm btn-ghost btn-default pull-right">应用</button>' +
           '</div>' +
 
@@ -156,15 +158,26 @@
   rangeDateTimePicker.prototype._time = function() {
     var dom = this.dom;
     var options = this.options;
+    var element = this.element;
     dom.showDate.find('input.rangeDate1').on('blur', function() {
       if (moment(this.value, options.format).isValid()) {
         dom.select1.data("DateTimePicker").date(checkTime(moment(this.value, options.format), dom.select1));
+        dom.showDate.find('input.rangeDate1').closest('label').removeClass('has-error');
+      } else {
+        element.trigger('select1Value.invalid', [{err: this.value, right: options.format}]);
+        console.warn('无效的时间格式：%s，正确时间格式：%s', this.value, moment().format(options.format));
+        dom.showDate.find('input.rangeDate1').closest('label').addClass('has-error');
       }
     });
     
     dom.showDate.find('input.rangeDate2').on('blur', function() {
       if (moment(this.value, options.format).isValid()) {
         dom.select2.data("DateTimePicker").date(checkTime(moment(this.value, options.format), dom.select2));
+        dom.showDate.find('input.rangeDate2').closest('label').removeClass('has-error');
+      } else {
+        element.trigger('select2Value.invalid', [{err: this.value, right: options.format}]);
+        console.warn('无效的时间格式：%s，正确时间格式：%s', this.value, moment().format(options.format));
+        dom.showDate.find('input.rangeDate2').closest('label').addClass('has-error');
       }
     });
     
