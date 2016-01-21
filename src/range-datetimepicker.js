@@ -50,13 +50,15 @@
     var element = this.element;
     var exOptions = this.exOptions;
     
-    element.addClass('range-datetimepicker-container');
+    element.addClass('range-datetimepicker-container clearfix');
     
     // 驼峰式命名的类不可去掉
     var templateString = '' +
-      '<div class="showRange btn btn-outline date-range-label">' +
-        '<span class="rangeData1"></span> - <span class="rangeData2"></span>' +
-        '<span class="caret"></span>' +
+      '<div class="showRange">' +
+        '<div class="btn btn-outline date-range-label">' +
+          '<span class="rangeData1"></span> - <span class="rangeData2"></span>' +
+          '<span class="caret"></span>' +
+        '</div>' +
       '</div>' +
 
       '<div class="datepicker-calendar-menu pickerBody datepickerHidden">' +
@@ -71,10 +73,10 @@
           '</div>' +
 
           '<div class="calendars row">' +
-            '<div class="calendar col-md-6" style="position: relative;height: 100px;">' +
+            '<div class="calendar col-md-6" style="position: relative;">' +
               '<div class="datetimepickerSelect datetimepickerSelect1"><input type="hidden" class="form-control"></div>' +
             '</div>' +
-            '<div class="calendar col-md-6" style="position: relative;height: 100px;">' +
+            '<div class="calendar col-md-6" style="position: relative;">' +
               '<div class="datetimepickerSelect datetimepickerSelect2"><input type="hidden" class="form-control"></div>' +
             '</div>' +
           '</div>' +

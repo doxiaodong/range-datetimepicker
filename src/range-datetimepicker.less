@@ -1,0 +1,153 @@
+.range-datetimepicker-container {
+  
+  @width: 500px;
+  @padding: 15px;
+  
+  @bg1: #eee;
+  @bg2: #e1e1e1;
+  @bg3: #ddd;
+  
+  @bg-disabled: rgba(238,238,238,.8);
+  @bg-active: #238efa;
+  
+  @color1: #3d424d;
+  
+  
+  display: inline-block;
+  vertical-align: top;
+  
+  .datepickerHidden {
+    display: none!important;
+  }
+  
+  .no-select () {
+    moz-user-select: -moz-none;
+    -moz-user-select: none;
+    -o-user-select:none;
+    -khtml-user-select:none;
+    -webkit-user-select:none;
+    -ms-user-select:none;
+    user-select:none;
+  }
+  
+  
+  width: @width;
+  .datepickerHidden {
+    display: none!important;
+  }
+  .showRange {
+    float: right;
+    width: 100%;
+    text-align: right;
+  }
+  .pickerBody {
+    float: left;
+    padding: @padding;
+    border: 1px solid #e6ebf5;
+  }
+  .showDate {
+    width: @width - 2*@padding;
+    input.form-control {
+      height: 30px;
+      margin: 0 5px;
+      max-width: 150px;
+    }
+  }
+  
+  .datetimepickerSelect {    
+    
+    table {
+      th, td {
+        border-radius: 0;
+      }
+      
+      td {
+        color: #3d424d;
+        background-color: @bg1;
+        &:hover {
+          background-color: @bg2!important;
+        }
+        &.disabled, &.disabled:hover {
+          background-color: @bg-disabled!important;
+          opacity: 0.5;
+        }
+        &.active, &.active:hover {
+          color: #fff;
+          background-color: @bg-active!important;
+        }
+        
+        span {
+          border-radius: 0;
+          background: transparent;
+          .no-select;
+        }
+        &.separator:hover {
+          background-color: @bg1!important;
+        }
+      }
+      
+      
+    }
+    
+    .picker-switch  {
+      td {
+        background-color: @bg2;
+        &:hover {
+          background-color: @bg3!important;
+        }
+      }
+    }
+    
+    .timepicker-picker {
+      table {
+        td {
+          span {
+            width: 53px;
+            height: 53px;
+            line-height: 53px;
+          }
+        }
+      }
+    }
+    
+    .datepicker-months, .datepicker-years, .datepicker-decades {
+      table {
+        td {
+          &:hover {
+            background-color: @bg1!important;
+          }
+          span {
+            &:not([class]) {
+              display: none;
+            }
+            &:not(.disabled) {
+              color: #3d424d;
+              background-color: @bg1;
+              text-shadow: none;
+              font-weight: 700;
+              &:hover {
+                background-color: @bg2;
+              }
+            }
+          }
+          span.active {
+            position: relative;
+            &:before {
+              content: '';
+              display: inline-block;
+              border: solid transparent;
+              border-width: 0 0 7px 7px;
+              border-bottom-color: #337ab7;
+              border-top-color: rgba(0,0,0,0.2);
+              position: absolute;
+              bottom: 4px;
+              right: 4px;
+            }
+            
+          }
+        }
+      }
+    }
+    
+  }
+}

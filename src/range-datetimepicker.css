@@ -1,3 +1,117 @@
+.range-datetimepicker-container {
+  display: inline-block;
+  vertical-align: top;
+}
 .range-datetimepicker-container .datepickerHidden {
   display: none!important;
+}
+.range-datetimepicker-container {
+  width: 500px;
+}
+.range-datetimepicker-container .datepickerHidden {
+  display: none!important;
+}
+.range-datetimepicker-container .showRange {
+  float: right;
+  width: 100%;
+  text-align: right;
+}
+.range-datetimepicker-container .pickerBody {
+  float: left;
+  padding: 15px;
+  border: 1px solid #e6ebf5;
+}
+.range-datetimepicker-container .showDate {
+  width: 470px;
+}
+.range-datetimepicker-container .showDate input.form-control {
+  height: 30px;
+  margin: 0 5px;
+  max-width: 150px;
+}
+.range-datetimepicker-container .datetimepickerSelect table th,
+.range-datetimepicker-container .datetimepickerSelect table td {
+  border-radius: 0;
+}
+.range-datetimepicker-container .datetimepickerSelect table td {
+  color: #3d424d;
+  background-color: #eee;
+}
+.range-datetimepicker-container .datetimepickerSelect table td:hover {
+  background-color: #e1e1e1 !important;
+}
+.range-datetimepicker-container .datetimepickerSelect table td.disabled,
+.range-datetimepicker-container .datetimepickerSelect table td.disabled:hover {
+  background-color: rgba(238, 238, 238, 0.8) !important;
+  opacity: 0.5;
+}
+.range-datetimepicker-container .datetimepickerSelect table td.active,
+.range-datetimepicker-container .datetimepickerSelect table td.active:hover {
+  color: #fff;
+  background-color: #238efa !important;
+}
+.range-datetimepicker-container .datetimepickerSelect table td span {
+  border-radius: 0;
+  background: transparent;
+  moz-user-select: -moz-none;
+  -moz-user-select: none;
+  -o-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.range-datetimepicker-container .datetimepickerSelect table td.separator:hover {
+  background-color: #eee !important;
+}
+.range-datetimepicker-container .datetimepickerSelect .picker-switch td {
+  background-color: #e1e1e1;
+}
+.range-datetimepicker-container .datetimepickerSelect .picker-switch td:hover {
+  background-color: #ddd !important;
+}
+.range-datetimepicker-container .datetimepickerSelect .timepicker-picker table td span {
+  width: 53px;
+  height: 53px;
+  line-height: 53px;
+}
+.range-datetimepicker-container .datetimepickerSelect .datepicker-months table td:hover,
+.range-datetimepicker-container .datetimepickerSelect .datepicker-years table td:hover,
+.range-datetimepicker-container .datetimepickerSelect .datepicker-decades table td:hover {
+  background-color: #eee !important;
+}
+.range-datetimepicker-container .datetimepickerSelect .datepicker-months table td span:not([class]),
+.range-datetimepicker-container .datetimepickerSelect .datepicker-years table td span:not([class]),
+.range-datetimepicker-container .datetimepickerSelect .datepicker-decades table td span:not([class]) {
+  display: none;
+}
+.range-datetimepicker-container .datetimepickerSelect .datepicker-months table td span:not(.disabled),
+.range-datetimepicker-container .datetimepickerSelect .datepicker-years table td span:not(.disabled),
+.range-datetimepicker-container .datetimepickerSelect .datepicker-decades table td span:not(.disabled) {
+  color: #3d424d;
+  background-color: #eee;
+  text-shadow: none;
+  font-weight: 700;
+}
+.range-datetimepicker-container .datetimepickerSelect .datepicker-months table td span:not(.disabled):hover,
+.range-datetimepicker-container .datetimepickerSelect .datepicker-years table td span:not(.disabled):hover,
+.range-datetimepicker-container .datetimepickerSelect .datepicker-decades table td span:not(.disabled):hover {
+  background-color: #e1e1e1;
+}
+.range-datetimepicker-container .datetimepickerSelect .datepicker-months table td span.active,
+.range-datetimepicker-container .datetimepickerSelect .datepicker-years table td span.active,
+.range-datetimepicker-container .datetimepickerSelect .datepicker-decades table td span.active {
+  position: relative;
+}
+.range-datetimepicker-container .datetimepickerSelect .datepicker-months table td span.active:before,
+.range-datetimepicker-container .datetimepickerSelect .datepicker-years table td span.active:before,
+.range-datetimepicker-container .datetimepickerSelect .datepicker-decades table td span.active:before {
+  content: '';
+  display: inline-block;
+  border: solid transparent;
+  border-width: 0 0 7px 7px;
+  border-bottom-color: #337ab7;
+  border-top-color: rgba(0, 0, 0, 0.2);
+  position: absolute;
+  bottom: 4px;
+  right: 4px;
 }
