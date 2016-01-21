@@ -15,6 +15,9 @@
   
   display: inline-block;
   vertical-align: top;
+  float: right;
+  position: relative;
+  width: @width;
   
   .datepickerHidden {
     display: none!important;
@@ -30,20 +33,21 @@
     user-select:none;
   }
   
-  
-  width: @width;
   .datepickerHidden {
     display: none!important;
   }
   .showRange {
-    float: right;
     width: 100%;
     text-align: right;
   }
   .pickerBody {
-    float: left;
+    position: absolute;
+    z-index: 999;
+    right: 0;
+    top: 40px;
     padding: @padding;
     border: 1px solid #e6ebf5;
+    background: #fff;
   }
   .showDate {
     width: @width - 2*@padding;
