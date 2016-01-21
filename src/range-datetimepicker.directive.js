@@ -15,7 +15,7 @@
         }
         
         var _trigger = function() {
-          $(element).trigger('rangedatetime.update', [ngModel.$viewValue]);
+          $(element).trigger('rangedatetime.update', [angular.copy(ngModel.$viewValue)]);
         };
         
         var _init = function() {
@@ -42,8 +42,9 @@
           if (first) {
             _init();
             first = false;
+          } else {
+            _trigger();
           }
-          _trigger();
         };
         
       }
