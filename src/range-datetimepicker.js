@@ -43,8 +43,6 @@
     
     this._injectDate();
     
-    this.updateTime();
-    
   };
   
   rangeDateTimePicker.prototype._tempalte = function() {
@@ -54,14 +52,14 @@
     
     element.addClass('range-datetimepicker-container');
     
-    // 驼峰式命名的类不可去掉, .hide不可去掉
+    // 驼峰式命名的类不可去掉
     var templateString = '' +
       '<div class="showRange btn btn-outline date-range-label">' +
         '<span class="rangeData1"></span> - <span class="rangeData2"></span>' +
         '<span class="caret"></span>' +
       '</div>' +
 
-      '<div class="datepicker-calendar-menu pickerBody hide">' +
+      '<div class="datepicker-calendar-menu pickerBody datepickerHidden">' +
         '<div class="datepicker-calendar">' +
 
           '<div class="datepicker-head form-inline showDate">' +
@@ -112,20 +110,20 @@
     });
     
     $(document).on('click', function() {
-      if (!dom.pickerBody.hasClass('hide')) {
+      if (!dom.pickerBody.hasClass('datepickerHidden')) {
         dom.updateTimeButton.trigger('click');
       }
     });
     
     dom.showRange.on('click', function() {
-      if (dom.pickerBody.hasClass('hide')) {
-        dom.pickerBody.removeClass('hide');
+      if (dom.pickerBody.hasClass('datepickerHidden')) {
+        dom.pickerBody.removeClass('datepickerHidden');
         // 不知道这里什么鬼，始终使用options.inline === true 不用 $(_element).data("DateTimePicker").show();
         // element.find('.datetimepickerSelect').each(function(index, _element) {
         //   $(_element).data("DateTimePicker").show();
         // });
       } else {
-        dom.pickerBody.addClass('hide');
+        dom.pickerBody.addClass('datepickerHidden');
         // 不知道这里什么鬼，始终使用options.inline === true 不用 $(_element).data("DateTimePicker").hide();
         // element.find('.datetimepickerSelect').each(function(index, _element) {
         //   $(_element).data("DateTimePicker").hide();
@@ -200,6 +198,8 @@
   rangeDateTimePicker.prototype._injectDate = function() {
     this.dom.select1.data("DateTimePicker").date(this.date.start);
     this.dom.select2.data("DateTimePicker").date(this.date.end);
+    
+    this.updateTime();
   };
   
   rangeDateTimePicker.prototype.updateTime = function() {
@@ -222,10 +222,9 @@
   rangeDateTimePicker.prototype._emit = function() {
     var self = this;
     var element = this.element;
-    var date = this.date;
     
     element.on('rangedatetime.update', function(e, _date) {
-      date = _date;
+      self.date = _date;
       self._injectDate();
     });
   };

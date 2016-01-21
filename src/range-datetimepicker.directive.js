@@ -5,8 +5,8 @@
       restrict: 'AE',
       require: '?ngModel',
       scope: {
-        options: '=',
-        exOptions: '='
+        options: '=?',
+        exOptions: '=?'
       },
       link: function(scope, element, attr, ngModel) {
         var first = true;
@@ -15,7 +15,7 @@
         }
         
         var _trigger = function() {
-          $(element).trigger('rangedatetime.update', [{date: ngModel.$viewValue}]);
+          $(element).trigger('rangedatetime.update', [ngModel.$viewValue]);
         };
         
         var _init = function() {
