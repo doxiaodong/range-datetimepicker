@@ -224,6 +224,9 @@
     var element = this.element;
     
     element.on('rangedatetime.update', function(e, _date) {
+      if (_date.start.valueOf() > _date.end.valueOf()) {
+        _date.start = $.extend(true, {}, _date.end);
+      }
       self.date = _date;
       self._injectDate();
     });
