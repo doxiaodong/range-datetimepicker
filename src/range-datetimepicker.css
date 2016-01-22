@@ -2,7 +2,6 @@
   display: none!important;
 }
 .range-datetimepicker-container {
-  width: 500px;
   position: relative;
   display: inline-block;
   vertical-align: top;
@@ -15,6 +14,12 @@
   float: right;
   width: 100%;
   text-align: right;
+}
+.range-datetimepicker-container .showRange .datRangeLabel {
+  padding: 0;
+}
+.range-datetimepicker-container .showRange .datRangeLabel .caret {
+  margin-left: 5px;
 }
 .range-datetimepicker-container .pickerBody {
   position: absolute;

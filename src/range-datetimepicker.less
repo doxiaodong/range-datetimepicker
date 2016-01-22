@@ -17,7 +17,6 @@
   vertical-align: top;
   float: right;
   position: relative;
-  width: @width;
   
   .datepickerHidden {
     display: none!important;
@@ -39,6 +38,12 @@
   .showRange {
     width: 100%;
     text-align: right;
+    .datRangeLabel {
+      padding: 0;
+      .caret {
+        margin-left: 5px;
+      }
+    }
   }
   .pickerBody {
     position: absolute;
