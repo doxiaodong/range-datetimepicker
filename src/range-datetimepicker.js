@@ -113,7 +113,7 @@
     
     $(document).on('click', function() {
       if (!dom.pickerBody.hasClass('datepickerHidden')) {
-        dom.updateTimeButton.trigger('click');
+        dom.showRange.trigger('click');
       }
     });
     
