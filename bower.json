@@ -7,7 +7,7 @@
     "src/range-datetimepicker.directive.js"
   ],
   "dependencies": {
-    "bootstrap-datetimepicker": "eonasdan-bootstrap-datetimepicker#latest",
+    "bootstrap-datetimepicker": "eonasdan-bootstrap-datetimepicker#development",
     "bootstrap": "~3.3.6",
     "angular": "~1.4.8"
   }
