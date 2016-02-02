@@ -2,12 +2,13 @@
   "name": "doxiaodong-range-datetimepicker",
   "version": "0.1.0",
   "main": [
+    "bootstrap-datetimepicker/bootstrap-datetimepicker.css",
     "src/range-datetimepicker.css",
+    "bootstrap-datetimepicker/bootstrap-datetimepicker.js",
     "src/range-datetimepicker.js",
     "src/range-datetimepicker.directive.js"
   ],
   "dependencies": {
-    "bootstrap-datetimepicker": "eonasdan-bootstrap-datetimepicker#development",
     "bootstrap": "~3.3.6",
     "angular": "~1.4.8"
   }
