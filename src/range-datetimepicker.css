@@ -15,10 +15,10 @@
   width: 100%;
   text-align: right;
 }
-.range-datetimepicker-container .showRange .datRangeLabel {
+.range-datetimepicker-container .showRange .dateRangeLabel {
   padding: 0;
 }
-.range-datetimepicker-container .showRange .datRangeLabel .caret {
+.range-datetimepicker-container .showRange .dateRangeLabel .caret {
   margin-left: 5px;
 }
 .range-datetimepicker-container .pickerBody {

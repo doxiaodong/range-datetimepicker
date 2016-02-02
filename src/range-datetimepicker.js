@@ -55,7 +55,7 @@
     // 驼峰式命名的类不可去掉
     var templateString = '' +
       '<div class="showRange">' +
-        '<div class="btn btn-outline date-range-label">' +
+        '<div class="btn btn-outline dateRangeLabel">' +
           '<span class="rangeData1"></span> - <span class="rangeData2"></span>' +
           '<span class="caret"></span>' +
         '</div>' +
