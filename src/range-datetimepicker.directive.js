@@ -10,6 +10,7 @@
       },
       link: function(scope, element, attr, ngModel) {
         var first = true;
+        _render = false;
         if (!ngModel) {
           return;
         }
@@ -24,9 +25,10 @@
           scope.exOptions = scope.exOptions || {};
           scope.exOptions.defaultDate = angular.copy(ngModel.$viewValue);
           scope.exOptions.update = function(date) {
-            if(!first) {
+            if(!first && !_render) {
               ngModel.$setViewValue(date);
             }
+            _render = false;
           };
           $(element).rangePicker(scope.options, scope.exOptions);
           $(element).on('select1Value.invalid', function(e, data) {
@@ -38,6 +40,7 @@
         };
         
         ngModel.$render = function() {
+          _render = true;
           if (!ngModel.$viewValue) {
             return;
           }
