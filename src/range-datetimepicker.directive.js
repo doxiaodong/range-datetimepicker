@@ -21,7 +21,7 @@
         
         var _init = function() {
           scope.options = scope.options || {};
-          scope.options.maxDate = moment();
+          scope.options.maxDate = scope.options.maxDate || moment();
           scope.exOptions = scope.exOptions || {};
           scope.exOptions.defaultDate = angular.copy(ngModel.$viewValue);
           scope.exOptions.update = function(date) {
