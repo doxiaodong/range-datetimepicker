@@ -14,11 +14,11 @@
         if (!ngModel) {
           return;
         }
-        
+
         var _trigger = function() {
           $(element).trigger('rangedatetime.update', [angular.copy(ngModel.$viewValue)]);
         };
-        
+
         var _init = function() {
           scope.options = scope.options || {};
           scope.options.maxDate = scope.options.maxDate || moment();
@@ -38,7 +38,7 @@
             scope.$emit('select2Value.invalid', data);
           });
         };
-        
+
         ngModel.$render = function() {
           _render = true;
           if (!ngModel.$viewValue) {
@@ -51,7 +51,7 @@
             _trigger();
           }
         };
-        
+
       }
     };
   });

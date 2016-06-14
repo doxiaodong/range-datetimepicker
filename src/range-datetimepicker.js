@@ -6,9 +6,9 @@
    *
    * param: exOptions <range-datetimepicker extra params> {template: string, defaultDate: {start: moment(), end: moment()}}
    */
-  
+
   var rangeDateTimePicker = function(element, options, exOptions) {
-    
+
     this.element = element;
     this.options = options || {};
     this.options.format = this.options.format || 'YYYY/MM/DD';
@@ -17,41 +17,41 @@
     this.options.inline = true; // 始终inline
     this.exOptions = exOptions || {};
     this.exOptions.defaultDate = this.exOptions.defaultDate || {start: moment().subtract(moment.duration(7, 'd')), end: moment()};
-    
+
     // 存储dom
     this.dom = {};
-    
+
     // 时间格式
     this.date = this.exOptions.defaultDate;
-    
+
     this.init();
   };
-  
+
   rangeDateTimePicker.prototype.init = function() {
-    
+
     this._tempalte();
     this._dom();
-    
+
     // 清楚旧的默认时间设置，避免和新的配置冲突
     if (this.options.defaultDate) {
       this.options.defaultDate = undefined;
     }
     this.dom.select1.datetimepicker(this.options);
     this.dom.select2.datetimepicker(this.options);
-    
+
     this._event();
-    
+
     this._injectDate();
-    
+
   };
-  
+
   rangeDateTimePicker.prototype._tempalte = function() {
-    
+
     var element = this.element;
     var exOptions = this.exOptions;
-    
+
     element.addClass('range-datetimepicker-container clearfix');
-    
+
     // 驼峰式命名的类不可去掉
     var templateString = '' +
       '<div class="showRange">' +
@@ -83,40 +83,40 @@
 
         '</div>' +
       '</div>';
-  
+
     var template = (exOptions && exOptions.template) || templateString;
-    
+
     element.html(template);
   };
-  
+
   rangeDateTimePicker.prototype._dom = function() {
     var element = this.element;
     this.dom.pickerBody = element.find('.pickerBody');
     this.dom.select1 = element.find('.datetimepickerSelect1');
     this.dom.select2 = element.find('.datetimepickerSelect2');
     this.dom.showRange = element.find('.showRange');
-    
+
     this.dom.showDate = element.find('.showDate');
-    
+
     this.dom.updateTimeButton = element.find('.updateTimeButton');
   };
-  
+
   rangeDateTimePicker.prototype._event = function() {
     var self = this;
     var element = this.element;
     var dom = this.dom;
     var options = this.options;
-    
+
     element.on('click', function(e) {
       e.stopPropagation();
     });
-    
+
     $(document).on('click', function() {
       if (!dom.pickerBody.hasClass('datepickerHidden')) {
         dom.showRange.trigger('click');
       }
     });
-    
+
     dom.showRange.on('click', function() {
       if (dom.pickerBody.hasClass('datepickerHidden')) {
         dom.pickerBody.removeClass('datepickerHidden');
@@ -132,29 +132,29 @@
         // });
       }
     });
-    
+
     dom.updateTimeButton.on('click', function() {
       self.updateTime();
-      
+
       dom.showRange.trigger('click');
     });
-    
+
     dom.select1.on("dp.change", function(e) {
       dom.select2.data("DateTimePicker").minDate(e.date);
       dom.showDate.find('input.rangeDate1').val(e.date.format(options.format));
     });
-    
+
     dom.select2.on("dp.change", function(e) {
       dom.select1.data("DateTimePicker").maxDate(e.date);
       dom.showDate.find('input.rangeDate2').val(e.date.format(options.format));
     });
-    
+
     this._time();
-    
+
     this._emit();
-    
+
   };
-  
+
   rangeDateTimePicker.prototype._time = function() {
     var dom = this.dom;
     var options = this.options;
@@ -169,7 +169,7 @@
         dom.showDate.find('input.rangeDate1').closest('label').addClass('has-error');
       }
     });
-    
+
     dom.showDate.find('input.rangeDate2').on('blur', function() {
       if (moment(this.value, options.format).isValid()) {
         dom.select2.data("DateTimePicker").date(checkTime(moment(this.value, options.format), dom.select2));
@@ -180,7 +180,7 @@
         dom.showDate.find('input.rangeDate2').closest('label').addClass('has-error');
       }
     });
-    
+
     function checkTime(date, select) {
       var _max = select.data("DateTimePicker").maxDate();
       var _min = select.data("DateTimePicker").minDate();
@@ -196,39 +196,69 @@
     }
 
   };
-  
+
   rangeDateTimePicker.prototype._injectDate = function() {
+
+    select2Max = this.dom.select2.data("DateTimePicker").maxDate();
+    select2Min = this.dom.select2.data("DateTimePicker").minDate();
+    select1Max = this.dom.select1.data("DateTimePicker").maxDate();
+    select1Min = this.dom.select1.data("DateTimePicker").minDate();
+
+    if (select2Max && this.date.end.valueOf() > select2Max.valueOf()) {
+      this.dom.select2.data("DateTimePicker").maxDate(this.date.end);
+    }
+    if (select2Min && this.date.end.valueOf() < select2Min.valueOf()) {
+      this.dom.select2.data("DateTimePicker").minDate(this.date.end);
+    }
+    if (select1Max && this.date.start.valueOf() > select1Max.valueOf()) {
+      this.dom.select1.data("DateTimePicker").maxDate(this.date.start);
+    }
+    if (select1Min && this.date.start.valueOf() < select1Min.valueOf()) {
+      this.dom.select1.data("DateTimePicker").minDate(this.date.start);
+    }
+
     this.dom.select1.data("DateTimePicker").date(this.date.start);
     this.dom.select2.data("DateTimePicker").date(this.date.end);
-    
+
     this.updateTime();
   };
-  
+
   rangeDateTimePicker.prototype.updateTime = function() {
-    
+
     var dom = this.dom;
     var options = this.options;
-    
+
     this.date.start = dom.select1.data("DateTimePicker").date();
     this.date.end = dom.select2.data("DateTimePicker").date();
-    
+
     dom.showRange.find('.rangeData1').html(this.date.start.format(options.format));
     dom.showRange.find('.rangeData2').html(this.date.end.format(options.format));
-    
+
     if (typeof(this.exOptions.update) === 'function') {
       this.exOptions.update(this.date);
     }
-    
+
   };
-  
+
   rangeDateTimePicker.prototype._emit = function() {
     var self = this;
     var element = this.element;
-    
+
     element.on('rangedatetime.update', function(e, _date) {
       if (_date.start.valueOf() > _date.end.valueOf()) {
         _date.start = $.extend(true, {}, _date.end);
       }
+
+      // 最大最小时间限制
+      if (self.options.minDate && _date.start.valueOf() < self.options.minDate.valueOf()) {
+        console.warn('开始时间小于最小时间');
+        return
+      }
+      if (self.options.maxDate && _date.end.valueOf() > self.options.maxDate.valueOf()) {
+        console.warn('结束时间大于最大时间');
+        return
+      }
+
       self.date = _date;
       self._injectDate();
     });
@@ -238,5 +268,5 @@
   $.fn.rangePicker = function(options, exOptions) {
     new rangeDateTimePicker($(this), options, exOptions);
   };
-  
+
 })(jQuery);

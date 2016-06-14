@@ -3,45 +3,72 @@
 <head>
   <meta charset="UTF-8">
   <title>range-datetimepicker example</title>
-  
+
   <!-- build:css styles/style.css -->
   <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.css">
   <link rel="stylesheet" href="../bootstrap-datetimepicker/bootstrap-datetimepicker.css">
-  
+
   <link rel="stylesheet" href="../src/range-datetimepicker.css">
   <!-- endbuild -->
-  
+
 </head>
 <body>
-  
-  
+
+
   <div class="row">
     <div class="col-md-6">
+      <a onclick="selectToday()">今天</a>
+      <a onclick="select1Today()">昨天</a>
+      <a onclick="select7Today()">近7天</a>
       <p class="res1"></p>
       customer: <span id="datetimepicker"></span>
     </div>
     <div class="col-md-6" id="angularTest" ng-controller="angularCtrl">
+      <a href ng-click="selectToday()">今天</a>
+      <a href ng-click="select1Today()">昨天</a>
+      <a href ng-click="select7Today()">近7天</a>
+
       <p class="res2">{{ selectedDate }}</p>
       angular: <range-datetimepicker ng-model="selectedDate" options="options"></range-datetimepicker>
-      
+
     </div>
   </div>
-  
-  
-  
+
+
+
   <!-- build:js scripts/app.js -->
   <script src="../bower_components/jquery/dist/jquery.js"></script>
   <script src="../bower_components/angular/angular.js"></script>
   <script src="../bower_components/moment/moment.js"></script>
   <script src="../bower_components/moment/locale/zh-cn.js"></script>
   <script src="../bower_components/moment-timezone/builds/moment-timezone-with-data-2010-2020.js"></script>
-  
+
   <script src="../bootstrap-datetimepicker/bootstrap-datetimepicker.js"></script>
   <script src="../src/range-datetimepicker.js"></script>
   <script src="../src/range-datetimepicker.directive.js"></script>
   <!-- endbuild -->
-  
+
   <script>
+    var now = moment();
+    var selectToday = function() {
+      $("#datetimepicker").trigger('rangedatetime.update', [{
+        start: now.clone(),
+        end: now.clone().add(moment.duration(2, 'd'))
+      }]);
+    };
+    var select1Today = function() {
+      $("#datetimepicker").trigger('rangedatetime.update', [{
+        start: now.clone().subtract(moment.duration(1, 'd')),
+        end: now.clone().subtract(moment.duration(1, 'd'))
+      }]);
+    };
+    var select7Today = function() {
+      $("#datetimepicker").trigger('rangedatetime.update', [{
+        start: now.clone().subtract(moment.duration(7, 'd')),
+        end: now.clone()
+      }]);
+    };
+
     $("#datetimepicker").rangePicker({
       format: 'YYYY/MM'
     }, {
@@ -62,34 +89,56 @@
     })
     ;
   </script>
-  
+
   <script>
     var testModule = angular.module('angularTest', ['range.datetimepicker']);
-    testModule.controller('angularCtrl', ['$scope', function($scope) {
+    testModule.controller('angularCtrl', ['$scope', '$timeout', function($scope, $timeout) {
+      var now = moment();
+
       $scope.selectedDate = {
-        start: moment().subtract(moment.duration(2, 'd')),
-        end: moment()
+        start: now.clone().subtract(moment.duration(2, 'd')),
+        end: now.clone()
       };
+
+      $scope.selectToday = function() {
+        $scope.selectedDate = {
+          start: now.clone(),
+          end: now.clone().add(moment.duration(2, 'd'))
+        };
+      };
+      $scope.select1Today = function() {
+        $scope.selectedDate = {
+          start: now.clone().subtract(moment.duration(1, 'd')),
+          end: now.clone().subtract(moment.duration(1, 'd'))
+        };
+      };
+      $scope.select7Today = function() {
+        $scope.selectedDate = {
+          start: now.clone().subtract(moment.duration(7, 'd')),
+          end: now.clone()
+        };
+      };
+
       $scope.options = {
         format: 'MMMM Do YYYY, HH:mm:ss'
       };
-      
+
       $scope.$watchCollection('selectedDate', function() {
         console.log('update angular');
       });
-      
+
       $scope.$on('select1Value.invalid', function(e, data) {
         console.warn('html, err: %s, right: %s', data.err, data.right);
       });
       $scope.$on('select2Value.invalid', function(e, data) {
         console.warn('html, err: %s, right: %s', data.err, data.right);
       });
-      
+
     }]);
-    
+
     var test = document.getElementById('angularTest');
     angular.bootstrap(angular.element(test), ['angularTest']);
-    
+
   </script>
 </body>
 </html>

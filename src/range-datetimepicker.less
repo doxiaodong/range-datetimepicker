@@ -1,27 +1,27 @@
 .range-datetimepicker-container {
-  
+
   @width: 500px;
   @padding: 15px;
-  
+
   @bg1: #eee;
   @bg2: #e1e1e1;
   @bg3: #ddd;
-  
+
   @bg-disabled: rgba(238,238,238,.8);
   @bg-active: #238efa;
-  
+
   @color1: #3d424d;
-  
-  
+
+
   display: inline-block;
   vertical-align: top;
   float: right;
   position: relative;
-  
+
   .datepickerHidden {
     display: none!important;
   }
-  
+
   .no-select () {
     moz-user-select: -moz-none;
     -moz-user-select: none;
@@ -31,7 +31,7 @@
     -ms-user-select:none;
     user-select:none;
   }
-  
+
   .datepickerHidden {
     display: none!important;
   }
@@ -62,14 +62,14 @@
       max-width: 150px;
     }
   }
-  
-  .datetimepickerSelect {    
-    
+
+  .datetimepickerSelect {
+
     table {
       th, td {
         border-radius: 0;
       }
-      
+
       td {
         color: #3d424d;
         background-color: @bg1;
@@ -84,7 +84,7 @@
           color: #fff;
           background-color: @bg-active!important;
         }
-        
+
         span {
           border-radius: 0;
           background: transparent;
@@ -94,10 +94,10 @@
           background-color: @bg1!important;
         }
       }
-      
-      
+
+
     }
-    
+
     .picker-switch  {
       td {
         background-color: @bg2;
@@ -106,7 +106,7 @@
         }
       }
     }
-    
+
     .timepicker-picker {
       table {
         td {
@@ -118,7 +118,7 @@
         }
       }
     }
-    
+
     .datepicker-months, .datepicker-years, .datepicker-decades {
       table {
         td {
@@ -152,11 +152,11 @@
               bottom: 4px;
               right: 4px;
             }
-            
+
           }
         }
       }
     }
-    
+
   }
 }
