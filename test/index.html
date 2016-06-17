@@ -53,7 +53,7 @@
     var selectToday = function() {
       $("#datetimepicker").trigger('rangedatetime.update', [{
         start: now.clone(),
-        end: now.clone().add(moment.duration(2, 'd'))
+        end: now.clone()
       }]);
     };
     var select1Today = function() {
@@ -98,7 +98,7 @@
       $scope.selectToday = function() {
         $scope.selectedDate = {
           start: now.clone(),
-          end: now.clone().add(moment.duration(2, 'd'))
+          end: now.clone()
         };
       };
       $scope.select1Today = function() {
