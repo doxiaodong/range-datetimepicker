@@ -95,11 +95,6 @@
     testModule.controller('angularCtrl', ['$scope', '$timeout', function($scope, $timeout) {
       var now = moment();
 
-      $scope.selectedDate = {
-        start: now.clone().subtract(moment.duration(2, 'd')),
-        end: now.clone()
-      };
-
       $scope.selectToday = function() {
         $scope.selectedDate = {
           start: now.clone(),
@@ -120,7 +115,14 @@
       };
 
       $scope.options = {
-        format: 'MMMM Do YYYY, HH:mm:ss'
+        format: 'MMMM Do YYYY, HH:mm:ss',
+        maxDate: now.clone(),
+        minDate: now.clone().subtract(moment.duration(20000, 'minute'))
+      };
+
+      $scope.selectedDate = {
+        start: $scope.options.minDate,
+        end: $scope.options.maxDate
       };
 
       $scope.$watchCollection('selectedDate', function() {
