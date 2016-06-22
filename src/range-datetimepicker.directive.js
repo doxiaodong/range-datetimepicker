@@ -9,8 +9,8 @@
         exOptions: '=?'
       },
       link: function(scope, element, attr, ngModel) {
-        var first = true;
-        _render = false;
+        var first = true,
+            _render = false;
         if (!ngModel) {
           return;
         }
