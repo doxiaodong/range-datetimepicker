@@ -1,4 +1,11 @@
 {
+  "name": "range-datetimepicker",
+  "version": "0.4.1",
+  "author": "duxiaodong",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/doxiaodong/range-datetimepicker.git"
+  },
   "devDependencies": {
     "del": "^2.2.0",
     "gulp": "github:gulpjs/gulp#4.0",
