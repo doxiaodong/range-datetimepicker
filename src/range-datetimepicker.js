@@ -69,7 +69,7 @@
             '<label><input type="text" class="form-control rangeDate1"></label>' +
             '<span class="date-separator">至</span>' +
             '<label><input type="text" class="form-control rangeDate2"></label>' +
-            '<button class="updateTimeButton btn btn-sm btn-light btn-primary pull-right">应用</button>' +
+            '<button type="button" class="updateTimeButton btn btn-sm btn-light btn-primary pull-right">应用</button>' +
           '</div>' +
 
           '<div class="calendars row">' +
