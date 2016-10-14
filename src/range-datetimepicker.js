@@ -21,7 +21,7 @@
    *
    * param: options <bootstrap-datetimepiker params> do not set defaultDate
    *
-   * param: exOptions <range-datetimepicker extra params> {template: string, defaultDate: {start: moment(), end: moment()}}
+   * param: exOptions <range-datetimepicker extra params> {template: string, defaultDate: {start: Date.now(), end: Date.now()}}
    */
 
   var rangeDateTimePicker = function (element, options, exOptions) {
@@ -33,7 +33,22 @@
     this.options.keepOpen = true; // 始终保持日历打开
     this.options.inline = true; // 始终inline
     this.exOptions = exOptions || {};
-    this.exOptions.defaultDate = this.exOptions.defaultDate || { start: moment().subtract(moment.duration(7, 'd')), end: moment() };
+
+    if (this.exOptions.defaultDate) {
+      this.exOptions.defaultDate = {
+        start: moment(this.exOptions.defaultDate.start),
+        end: moment(this.exOptions.defaultDate.end)
+      }
+    } else {
+      this.exOptions.defaultDate = { start: moment().subtract(moment.duration(7, 'd')), end: moment() };
+    }
+
+    if (this.options.maxDate) {
+      this.options.maxDate = moment(this.options.maxDate)
+    }
+    if (this.options.minDate) {
+      this.options.minDate = moment(this.options.minDate)
+    }
 
     // 存储dom
     this.dom = {};
@@ -252,7 +267,10 @@
     dom.showRange.find('.rangeData2').html(this.date.end.format(options.format));
 
     if (typeof (this.exOptions.update) === 'function') {
-      this.exOptions.update(this.date);
+      this.exOptions.update({
+        start: this.date.start.valueOf(),
+        end: this.date.end.valueOf()
+      });
     }
 
   };
@@ -261,7 +279,12 @@
     var self = this;
     var element = this.element;
 
-    element.on('rangedatetime.update', function (e, _date) {
+    element.on('rangedatetime.update', function (e, date) {
+      _date = {
+        start: moment(date.start),
+        end: moment(date.end)
+      }
+
       if (_date.start.valueOf() > _date.end.valueOf()) {
         _date.start = $.extend(true, {}, _date.end);
       }

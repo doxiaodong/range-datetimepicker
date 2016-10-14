@@ -20,23 +20,23 @@ gulp.task('html', function () {
     .pipe($.if('*.css', $.rev()))
     .pipe($.if('*.html', $.minifyHtml({ empty: true })))
     .pipe($.revReplace())
-    .pipe(gulp.dest('build'));
+    .pipe(gulp.dest('docs'));
 });
 
-gulp.task('clean', function(done) {
-	return $.del(['build/'], done);
+gulp.task('clean', function (done) {
+  return $.del(['docs/'], done);
 });
 
-gulp.task('fonts', function() {
+gulp.task('fonts', function () {
   return gulp.src('bower_components/bootstrap/fonts/*.{eot,svg,ttf,woff,woff2}')
-    .pipe(gulp.dest('build/fonts/'));
+    .pipe(gulp.dest('docs/fonts/'));
 });
 
 // < gulp 4.0
 // gulp.task('build', ['html', 'fonts']);
 
 // gulp.task('default', ['clean'], function () {
-  // gulp.start('build');
+// gulp.start('build');
 // });
 
 // gulp 4.0

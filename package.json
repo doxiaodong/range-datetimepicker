@@ -1,10 +1,14 @@
 {
   "name": "range-datetimepicker",
-  "version": "0.4.2",
+  "version": "1.0.0",
   "author": "duxiaodong",
   "repository": {
     "type": "git",
     "url": "https://github.com/doxiaodong/range-datetimepicker.git"
+  },
+  "peerDependencies": {
+    "bootstrap": "~3.3.7",
+    "angular": "~1.5.8"
   },
   "devDependencies": {
     "del": "^2.2.0",
