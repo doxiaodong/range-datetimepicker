@@ -280,7 +280,7 @@
     var element = this.element;
 
     element.on('rangedatetime.update', function (e, date) {
-      _date = {
+      var _date = {
         start: moment(date.start),
         end: moment(date.end)
       }
