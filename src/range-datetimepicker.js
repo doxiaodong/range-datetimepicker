@@ -1,4 +1,21 @@
-(function($){
+(function (factory) {
+  'use strict';
+  if (typeof define === 'function' && define.amd) {
+    // AMD is used - Register as an anonymous module.
+    define(['jquery', 'moment'], factory);
+  } else if (typeof exports === 'object') {
+    module.exports = factory(require('jquery'), require('moment'));
+  } else {
+    // Neither AMD nor CommonJS used. Use global variables.
+    if (typeof jQuery === 'undefined') {
+      throw 'range-datetimepicker requires jQuery to be loaded first';
+    }
+    if (typeof moment === 'undefined') {
+      throw 'range-datetimepicker requires Moment.js to be loaded first';
+    }
+    factory(jQuery, moment);
+  }
+} (function ($) {
   /*
    * param: element <jquery unique dom>
    *
@@ -7,7 +24,7 @@
    * param: exOptions <range-datetimepicker extra params> {template: string, defaultDate: {start: moment(), end: moment()}}
    */
 
-  var rangeDateTimePicker = function(element, options, exOptions) {
+  var rangeDateTimePicker = function (element, options, exOptions) {
 
     this.element = element;
     this.options = options || {};
@@ -16,7 +33,7 @@
     this.options.keepOpen = true; // 始终保持日历打开
     this.options.inline = true; // 始终inline
     this.exOptions = exOptions || {};
-    this.exOptions.defaultDate = this.exOptions.defaultDate || {start: moment().subtract(moment.duration(7, 'd')), end: moment()};
+    this.exOptions.defaultDate = this.exOptions.defaultDate || { start: moment().subtract(moment.duration(7, 'd')), end: moment() };
 
     // 存储dom
     this.dom = {};
@@ -27,7 +44,7 @@
     this.init();
   };
 
-  rangeDateTimePicker.prototype.init = function() {
+  rangeDateTimePicker.prototype.init = function () {
 
     this._tempalte();
     this._dom();
@@ -45,7 +62,7 @@
 
   };
 
-  rangeDateTimePicker.prototype._tempalte = function() {
+  rangeDateTimePicker.prototype._tempalte = function () {
 
     var element = this.element;
     var exOptions = this.exOptions;
@@ -55,33 +72,33 @@
     // 驼峰式命名的类不可去掉
     var templateString = '' +
       '<div class="showRange">' +
-        '<div class="btn btn-outline dateRangeLabel">' +
-          '<span class="rangeData1"></span> - <span class="rangeData2"></span>' +
-          '<span class="caret"></span>' +
-        '</div>' +
+      '<div class="btn btn-outline dateRangeLabel">' +
+      '<span class="rangeData1"></span> - <span class="rangeData2"></span>' +
+      '<span class="caret"></span>' +
+      '</div>' +
       '</div>' +
 
       '<div class="datepicker-calendar-menu pickerBody datepickerHidden">' +
-        '<div class="datepicker-calendar">' +
+      '<div class="datepicker-calendar">' +
 
-          '<div class="datepicker-head form-inline showDate">' +
-            '<span>时间范围:</span>' +
-            '<label><input type="text" class="form-control rangeDate1"></label>' +
-            '<span class="date-separator">至</span>' +
-            '<label><input type="text" class="form-control rangeDate2"></label>' +
-            '<button type="button" class="updateTimeButton btn btn-sm btn-light btn-primary pull-right">应用</button>' +
-          '</div>' +
+      '<div class="datepicker-head form-inline showDate">' +
+      '<span>时间范围:</span>' +
+      '<label><input type="text" class="form-control rangeDate1"></label>' +
+      '<span class="date-separator">至</span>' +
+      '<label><input type="text" class="form-control rangeDate2"></label>' +
+      '<button type="button" class="updateTimeButton btn btn-sm btn-light btn-primary pull-right">应用</button>' +
+      '</div>' +
 
-          '<div class="calendars row">' +
-            '<div class="calendar col-md-6" style="position: relative;">' +
-              '<div class="datetimepickerSelect datetimepickerSelect1"><input type="hidden" class="form-control"></div>' +
-            '</div>' +
-            '<div class="calendar col-md-6" style="position: relative;">' +
-              '<div class="datetimepickerSelect datetimepickerSelect2"><input type="hidden" class="form-control"></div>' +
-            '</div>' +
-          '</div>' +
+      '<div class="calendars row">' +
+      '<div class="calendar col-md-6" style="position: relative;">' +
+      '<div class="datetimepickerSelect datetimepickerSelect1"><input type="hidden" class="form-control"></div>' +
+      '</div>' +
+      '<div class="calendar col-md-6" style="position: relative;">' +
+      '<div class="datetimepickerSelect datetimepickerSelect2"><input type="hidden" class="form-control"></div>' +
+      '</div>' +
+      '</div>' +
 
-        '</div>' +
+      '</div>' +
       '</div>';
 
     var template = (exOptions && exOptions.template) || templateString;
@@ -89,7 +106,7 @@
     element.html(template);
   };
 
-  rangeDateTimePicker.prototype._dom = function() {
+  rangeDateTimePicker.prototype._dom = function () {
     var element = this.element;
     this.dom.pickerBody = element.find('.pickerBody');
     this.dom.select1 = element.find('.datetimepickerSelect1');
@@ -101,23 +118,23 @@
     this.dom.updateTimeButton = element.find('.updateTimeButton');
   };
 
-  rangeDateTimePicker.prototype._event = function() {
+  rangeDateTimePicker.prototype._event = function () {
     var self = this;
     var element = this.element;
     var dom = this.dom;
     var options = this.options;
 
-    element.on('click', function(e) {
+    element.on('click', function (e) {
       e.stopPropagation();
     });
 
-    $(document).on('click', function() {
+    $(document).on('click', function () {
       if (!dom.pickerBody.hasClass('datepickerHidden')) {
         dom.showRange.trigger('click');
       }
     });
 
-    dom.showRange.on('click', function() {
+    dom.showRange.on('click', function () {
       if (dom.pickerBody.hasClass('datepickerHidden')) {
         dom.pickerBody.removeClass('datepickerHidden');
         // 不知道这里什么鬼，始终使用options.inline === true 不用 $(_element).data("DateTimePicker").show();
@@ -133,18 +150,18 @@
       }
     });
 
-    dom.updateTimeButton.on('click', function() {
+    dom.updateTimeButton.on('click', function () {
       self.updateTime();
 
       dom.showRange.trigger('click');
     });
 
-    dom.select1.on("dp.change", function(e) {
+    dom.select1.on("dp.change", function (e) {
       dom.select2.data("DateTimePicker").minDate(e.date);
       dom.showDate.find('input.rangeDate1').val(e.date.format(options.format));
     });
 
-    dom.select2.on("dp.change", function(e) {
+    dom.select2.on("dp.change", function (e) {
       dom.select1.data("DateTimePicker").maxDate(e.date);
       dom.showDate.find('input.rangeDate2').val(e.date.format(options.format));
     });
@@ -155,27 +172,27 @@
 
   };
 
-  rangeDateTimePicker.prototype._time = function() {
+  rangeDateTimePicker.prototype._time = function () {
     var dom = this.dom;
     var options = this.options;
     var element = this.element;
-    dom.showDate.find('input.rangeDate1').on('blur', function() {
+    dom.showDate.find('input.rangeDate1').on('blur', function () {
       if (moment(this.value, options.format).isValid()) {
         dom.select1.data("DateTimePicker").date(checkTime(moment(this.value, options.format), dom.select1));
         dom.showDate.find('input.rangeDate1').closest('label').removeClass('has-error');
       } else {
-        element.trigger('select1Value.invalid', [{err: this.value, right: options.format}]);
+        element.trigger('select1Value.invalid', [{ err: this.value, right: options.format }]);
         console.warn('无效的时间格式：%s，正确时间格式：%s', this.value, moment().format(options.format));
         dom.showDate.find('input.rangeDate1').closest('label').addClass('has-error');
       }
     });
 
-    dom.showDate.find('input.rangeDate2').on('blur', function() {
+    dom.showDate.find('input.rangeDate2').on('blur', function () {
       if (moment(this.value, options.format).isValid()) {
         dom.select2.data("DateTimePicker").date(checkTime(moment(this.value, options.format), dom.select2));
         dom.showDate.find('input.rangeDate2').closest('label').removeClass('has-error');
       } else {
-        element.trigger('select2Value.invalid', [{err: this.value, right: options.format}]);
+        element.trigger('select2Value.invalid', [{ err: this.value, right: options.format }]);
         console.warn('无效的时间格式：%s，正确时间格式：%s', this.value, moment().format(options.format));
         dom.showDate.find('input.rangeDate2').closest('label').addClass('has-error');
       }
@@ -197,7 +214,7 @@
 
   };
 
-  rangeDateTimePicker.prototype._injectDate = function() {
+  rangeDateTimePicker.prototype._injectDate = function () {
 
     select2Max = this.dom.select2.data("DateTimePicker").maxDate();
     select2Min = this.dom.select2.data("DateTimePicker").minDate();
@@ -223,7 +240,7 @@
     this.updateTime();
   };
 
-  rangeDateTimePicker.prototype.updateTime = function() {
+  rangeDateTimePicker.prototype.updateTime = function () {
 
     var dom = this.dom;
     var options = this.options;
@@ -234,17 +251,17 @@
     dom.showRange.find('.rangeData1').html(this.date.start.format(options.format));
     dom.showRange.find('.rangeData2').html(this.date.end.format(options.format));
 
-    if (typeof(this.exOptions.update) === 'function') {
+    if (typeof (this.exOptions.update) === 'function') {
       this.exOptions.update(this.date);
     }
 
   };
 
-  rangeDateTimePicker.prototype._emit = function() {
+  rangeDateTimePicker.prototype._emit = function () {
     var self = this;
     var element = this.element;
 
-    element.on('rangedatetime.update', function(e, _date) {
+    element.on('rangedatetime.update', function (e, _date) {
       if (_date.start.valueOf() > _date.end.valueOf()) {
         _date.start = $.extend(true, {}, _date.end);
       }
@@ -265,8 +282,8 @@
   };
 
 
-  $.fn.rangePicker = function(options, exOptions) {
+  $.fn.rangePicker = function (options, exOptions) {
     new rangeDateTimePicker($(this), options, exOptions);
   };
 
-})(jQuery);
+}));
