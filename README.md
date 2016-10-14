@@ -1,6 +1,9 @@
 # range-datetimepicker
 use https://github.com/Eonasdan/bootstrap-datetimepicker
 
+### install
+
+* npm i --save range-datetimepicker
 
 ### test
 
