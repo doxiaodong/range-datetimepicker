@@ -1,4 +1,4 @@
-(function (factory) {
+(function(factory) {
   'use strict';
   if (typeof define === 'function' && define.amd) {
     // AMD is used - Register as an anonymous module.
@@ -15,7 +15,7 @@
     }
     factory(jQuery, moment);
   }
-} (function ($) {
+} (function($, moment) {
   /*
    * param: element <jquery unique dom>
    *
@@ -24,7 +24,7 @@
    * param: exOptions <range-datetimepicker extra params> {template: string, defaultDate: {start: Date.now(), end: Date.now()}}
    */
 
-  var rangeDateTimePicker = function (element, options, exOptions) {
+  var rangeDateTimePicker = function(element, options, exOptions) {
 
     this.element = element;
     this.options = options || {};
@@ -59,7 +59,7 @@
     this.init();
   };
 
-  rangeDateTimePicker.prototype.init = function () {
+  rangeDateTimePicker.prototype.init = function() {
 
     this._tempalte();
     this._dom();
@@ -77,7 +77,7 @@
 
   };
 
-  rangeDateTimePicker.prototype._tempalte = function () {
+  rangeDateTimePicker.prototype._tempalte = function() {
 
     var element = this.element;
     var exOptions = this.exOptions;
@@ -121,7 +121,7 @@
     element.html(template);
   };
 
-  rangeDateTimePicker.prototype._dom = function () {
+  rangeDateTimePicker.prototype._dom = function() {
     var element = this.element;
     this.dom.pickerBody = element.find('.pickerBody');
     this.dom.select1 = element.find('.datetimepickerSelect1');
@@ -133,23 +133,23 @@
     this.dom.updateTimeButton = element.find('.updateTimeButton');
   };
 
-  rangeDateTimePicker.prototype._event = function () {
+  rangeDateTimePicker.prototype._event = function() {
     var self = this;
     var element = this.element;
     var dom = this.dom;
     var options = this.options;
 
-    element.on('click', function (e) {
+    element.on('click', function(e) {
       e.stopPropagation();
     });
 
-    $(document).on('click', function () {
+    $(document).on('click', function() {
       if (!dom.pickerBody.hasClass('datepickerHidden')) {
         dom.showRange.trigger('click');
       }
     });
 
-    dom.showRange.on('click', function () {
+    dom.showRange.on('click', function() {
       if (dom.pickerBody.hasClass('datepickerHidden')) {
         dom.pickerBody.removeClass('datepickerHidden');
         // 不知道这里什么鬼，始终使用options.inline === true 不用 $(_element).data("DateTimePicker").show();
@@ -165,18 +165,18 @@
       }
     });
 
-    dom.updateTimeButton.on('click', function () {
+    dom.updateTimeButton.on('click', function() {
       self.updateTime();
 
       dom.showRange.trigger('click');
     });
 
-    dom.select1.on("dp.change", function (e) {
+    dom.select1.on("dp.change", function(e) {
       dom.select2.data("DateTimePicker").minDate(e.date);
       dom.showDate.find('input.rangeDate1').val(e.date.format(options.format));
     });
 
-    dom.select2.on("dp.change", function (e) {
+    dom.select2.on("dp.change", function(e) {
       dom.select1.data("DateTimePicker").maxDate(e.date);
       dom.showDate.find('input.rangeDate2').val(e.date.format(options.format));
     });
@@ -187,11 +187,11 @@
 
   };
 
-  rangeDateTimePicker.prototype._time = function () {
+  rangeDateTimePicker.prototype._time = function() {
     var dom = this.dom;
     var options = this.options;
     var element = this.element;
-    dom.showDate.find('input.rangeDate1').on('blur', function () {
+    dom.showDate.find('input.rangeDate1').on('blur', function() {
       if (moment(this.value, options.format).isValid()) {
         dom.select1.data("DateTimePicker").date(checkTime(moment(this.value, options.format), dom.select1));
         dom.showDate.find('input.rangeDate1').closest('label').removeClass('has-error');
@@ -202,7 +202,7 @@
       }
     });
 
-    dom.showDate.find('input.rangeDate2').on('blur', function () {
+    dom.showDate.find('input.rangeDate2').on('blur', function() {
       if (moment(this.value, options.format).isValid()) {
         dom.select2.data("DateTimePicker").date(checkTime(moment(this.value, options.format), dom.select2));
         dom.showDate.find('input.rangeDate2').closest('label').removeClass('has-error');
@@ -229,7 +229,7 @@
 
   };
 
-  rangeDateTimePicker.prototype._injectDate = function () {
+  rangeDateTimePicker.prototype._injectDate = function() {
 
     select2Max = this.dom.select2.data("DateTimePicker").maxDate();
     select2Min = this.dom.select2.data("DateTimePicker").minDate();
@@ -255,7 +255,7 @@
     this.updateTime();
   };
 
-  rangeDateTimePicker.prototype.updateTime = function () {
+  rangeDateTimePicker.prototype.updateTime = function() {
 
     var dom = this.dom;
     var options = this.options;
@@ -275,11 +275,11 @@
 
   };
 
-  rangeDateTimePicker.prototype._emit = function () {
+  rangeDateTimePicker.prototype._emit = function() {
     var self = this;
     var element = this.element;
 
-    element.on('rangedatetime.update', function (e, date) {
+    element.on('rangedatetime.update', function(e, date) {
       var _date = {
         start: moment(date.start),
         end: moment(date.end)
@@ -305,7 +305,7 @@
   };
 
 
-  $.fn.rangePicker = function (options, exOptions) {
+  $.fn.rangePicker = function(options, exOptions) {
     new rangeDateTimePicker($(this), options, exOptions);
   };
 
