@@ -27,12 +27,12 @@
   var rangeDateTimePicker = function(element, options, exOptions) {
 
     this.element = element;
-    this.options = options || {};
+    this.options = options ? $.extend({}, options) : {};
     this.options.format = this.options.format || 'YYYY/MM/DD';
     this.options.locale = this.options.locale || 'zh-cn';
     this.options.keepOpen = true; // 始终保持日历打开
     this.options.inline = true; // 始终inline
-    this.exOptions = exOptions || {};
+    this.exOptions = exOptions ? $.extend({}, exOptions) : {};
 
     if (this.exOptions.defaultDate) {
       this.exOptions.defaultDate = {
