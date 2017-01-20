@@ -25,6 +25,7 @@
    */
 
   var rangeDateTimePicker = function(element, options, exOptions) {
+    this.isTimestamp = true
 
     this.element = element;
     this.options = options ? $.extend({}, options) : {};
@@ -34,10 +35,17 @@
     this.options.inline = true; // 始终inline
     this.exOptions = exOptions ? $.extend({}, exOptions) : {};
 
-    if (this.exOptions.defaultDate) {
+    var defaultDate = this.exOptions.defaultDate
+
+    if (defaultDate) {
+
+      if (typeof defaultDate.start === 'object' && typeof defaultDate.end === 'object') {
+        this.isTimestamp = false
+      }
+
       this.exOptions.defaultDate = {
-        start: moment(this.exOptions.defaultDate.start),
-        end: moment(this.exOptions.defaultDate.end)
+        start: moment(defaultDate.start),
+        end: moment(defaultDate.end)
       }
     } else {
       this.exOptions.defaultDate = { start: moment().subtract(moment.duration(7, 'd')), end: moment() };
@@ -267,10 +275,15 @@
     dom.showRange.find('.rangeData2').html(this.date.end.format(options.format));
 
     if (typeof (this.exOptions.update) === 'function') {
-      this.exOptions.update({
-        start: this.date.start.valueOf(),
-        end: this.date.end.valueOf()
-      });
+      var output = {};
+      if (this.isTimestamp) {
+        output.start = this.date.start.valueOf()
+        output.end = this.date.end.valueOf()
+      } else {
+        output.start = this.date.start
+        output.end = this.date.end
+      }
+      this.exOptions.update(output);
     }
 
   };
